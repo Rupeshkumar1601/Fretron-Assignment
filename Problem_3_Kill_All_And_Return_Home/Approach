@@ -1,0 +1,7 @@
+Approach:
+Input Coordinates: Read the coordinates for the soldiers and the starting position of the castle.
+Simulate Movements:
+The castle moves forward until it encounters a soldier to kill.
+After killing a soldier, it turns left and continues moving.
+If the castle jumps over soldiers, it should continue its path.
+Track Paths: Store the paths taken by the castle for each unique path it takes to return home.
