@@ -1,0 +1,63 @@
+import java.util.*;
+
+public class DistributeApples {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Integer> appleWeights = new ArrayList<>();
+
+        
+        System.out.println("Enter apple weight in gram (-1 to stop): ");
+        while (true) {
+            int weight = sc.nextInt();
+            if (weight == -1) {
+                break;
+            }
+            appleWeights.add(weight);
+        }
+
+      
+        Collections.sort(appleWeights, Collections.reverseOrder());
+
+        
+        int totalWeight = appleWeights.stream().mapToInt(Integer::intValue).sum();
+        double ramTarget = totalWeight * 0.5;
+        double shamTarget = totalWeight * 0.3;
+        double rahimTarget = totalWeight * 0.2;
+
+        
+        double ramWeight = 0;
+        double shamWeight = 0;
+        double rahimWeight = 0;
+
+        
+        List<Integer> ramApples = new ArrayList<>();
+        List<Integer> shamApples = new ArrayList<>();
+        List<Integer> rahimApples = new ArrayList<>();
+
+        for (int weight : appleWeights) {
+            
+            double ramProportion = ramWeight / totalWeight;
+            double shamProportion = shamWeight / totalWeight;
+            double rahimProportion = rahimWeight / totalWeight;
+
+            
+            if (ramProportion < 0.5 && (ramWeight + weight <= ramTarget || ramWeight == 0)) {
+                ramWeight += weight;
+                ramApples.add(weight);
+            } else if (shamProportion < 0.3 && (shamWeight + weight <= shamTarget || shamWeight == 0)) {
+                shamWeight += weight;
+                shamApples.add(weight);
+            } else {
+                rahimWeight += weight;
+                rahimApples.add(weight);
+            }
+        }
+
+        
+        System.out.println("Distribution Result: ");
+        System.out.println("Ram: " + ramApples);
+        System.out.println("Sham: " + shamApples);
+        System.out.println("Rahim: " + rahimApples);
+    }
+}
+
