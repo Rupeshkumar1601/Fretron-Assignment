@@ -1,0 +1,45 @@
+import java.util.*;
+
+class FlightPath {
+    int x, y;
+
+    FlightPath(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class NoAccident {
+    public static void main(String[] args) {
+        List<FlightPath> flight1 = Arrays.asList(new FlightPath(1, 1), new FlightPath(2, 2), new FlightPath(3, 3));
+        List<FlightPath> flight2 = Arrays.asList(new FlightPath(1, 1), new FlightPath(2, 4), new FlightPath(3, 2));
+        List<FlightPath> flight3 = Arrays.asList(new FlightPath(1, 1), new FlightPath(4, 2), new FlightPath(3, 4));
+        
+        List<List<FlightPath>> flights = new ArrayList<>();
+        flights.add(flight1);
+        flights.add(flight2);
+        flights.add(flight3);
+        
+        drawFlightPaths(flights);
+    }
+    
+    public static void drawFlightPaths(List<List<FlightPath>> flights) {
+        Set<String> visited = new HashSet<>();
+        
+        for (List<FlightPath> flight : flights) {
+            for (FlightPath path : flight) {
+                String coord = path.x + "," + path.y;
+                if (visited.contains(coord)) {
+                    System.out.println("Intersection detected at: " + coord);
+                    return;
+                } else {
+                    visited.add(coord);
+                    System.out.println("Flight at: " + coord);
+                }
+            }
+        }
+        
+        System.out.println("No intersections detected.");
+    }
+}
+
