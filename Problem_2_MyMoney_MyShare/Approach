@@ -1,0 +1,15 @@
+To solve the problem of distributing apples among Ram, Sham, and Rahim proportionately based on the amount they paid, we can follow a greedy approach. We'll allocate apples in a way that tries to keep the distribution as close to the desired proportions as possible.
+
+Here's a simple approach and the corresponding Java code to achieve this:
+
+Approach:
+Input Weights: Read the weights of apples until the user inputs -1.
+Sort Weights: Sort the list of apple weights in descending order to prioritize larger apples first.
+Initialize Proportions:
+Ram: 50%
+Sham: 30%
+Rahim: 20%
+Initialize Weight Accumulations: Create accumulators for Ram, Sham, and Rahim to keep track of the total weight allocated to each.
+Distribute Apples:
+Iterate through the sorted list of apple weights.
+Allocate each apple to the person whose current proportion is farthest below their target proportion.
