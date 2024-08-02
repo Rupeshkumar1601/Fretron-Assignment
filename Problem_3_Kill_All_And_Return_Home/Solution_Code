@@ -1,0 +1,97 @@
+import java.util.*;
+
+class chessboardgame {
+    static class Position {
+        int x, y;
+        Position(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x + "," + y + ")";
+        }
+    }
+
+    static List<Position> soldiers = new ArrayList<>();
+    static Position castleStart;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("find_my_home_castle –soldiers 11");
+        for (int i = 1; i <= 11; i++) {
+            System.out.print("Enter coordinates for soldier " + i + ": ");
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            soldiers.add(new Position(x, y));
+        }
+
+        System.out.print("Enter the coordinates for your special castle: ");
+        int startX = sc.nextInt();
+        int startY = sc.nextInt();
+        castleStart = new Position(startX, startY);
+
+        List<List<Position>> paths = findPaths();
+        System.out.println("Thanks. There are " + paths.size() + " unique paths for your ‘special_castle’");
+
+        for (int i = 0; i < paths.size(); i++) {
+            System.out.println("\nPath " + (i + 1) + ":");
+            for (Position pos : paths.get(i)) {
+                System.out.print(pos + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static List<List<Position>> findPaths() {
+        List<List<Position>> paths = new ArrayList<>();
+        Set<String> visited = new HashSet<>();
+        findPathsHelper(castleStart, new ArrayList<>(), paths, visited);
+        return paths;
+    }
+
+    public static void findPathsHelper(Position current, List<Position> path, List<List<Position>> paths, Set<String> visited) {
+        if (current.x == castleStart.x && current.y == castleStart.y && !path.isEmpty()) {
+            path.add(new Position(current.x, current.y));
+            paths.add(new ArrayList<>(path));
+            return;
+        }
+
+        if (visited.contains(current.toString())) return;
+
+        visited.add(current.toString());
+        path.add(new Position(current.x, current.y));
+
+        // Move forward
+        for (int i = current.y + 1; i <= 8; i++) {
+            Position next = new Position(current.x, i);
+            if (containsSoldier(next)) {
+                findPathsHelper(next, path, paths, visited);
+                break;
+            }
+        }
+
+        // Turn left and move to x direction
+        for (int i = current.x - 1; i >= 1; i--) {
+            Position next = new Position(i, current.y);
+            if (containsSoldier(next)) {
+                findPathsHelper(next, path, paths, visited);
+                break;
+            }
+        }
+
+        path.remove(path.size() - 1);
+        visited.remove(current.toString());
+    }
+
+    public static boolean containsSoldier(Position pos) {
+        for (Position soldier : soldiers) {
+            if (soldier.x == pos.x && soldier.y == pos.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
