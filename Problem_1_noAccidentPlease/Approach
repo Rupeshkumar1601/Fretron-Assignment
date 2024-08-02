@@ -1,0 +1,20 @@
+You are given multiple sets of coordinates representing the paths of different flights.
+Each path must be checked to ensure no two paths intersect.
+Output the paths or indicate if there's an intersection.
+
+
+The input consists of coordinates for each flight. For example:
+
+Flight 1: (1, 1), (2, 2), (3, 3)
+Flight 2: (1, 1), (2, 4), (3, 2)
+Flight 3: (1, 1), (4, 2), (3, 4)
+These coordinates should be stored in a suitable data structure such as a list of lists.
+Data Structures:
+
+Use a Set to keep track of visited coordinates. This allows for efficient checking of whether a coordinate has been visited.
+Algorithm:
+
+Iterate through each flight's path.
+For each coordinate in the path, check if it has been visited (using the Set).
+If a coordinate is already in the set, it means there is an intersection. Record this and stop further checking.
+If not, add the coordinate to the set
